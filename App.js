@@ -3,8 +3,9 @@ console.log(card);
 var currPage = 1;
 var movie=[];
 var favMovies=[];
-async function movieList(currPage){
-const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${currPage}`);
+var favMoviesId=[];
+async function movieList(page){
+const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${page}`);
 const data = await response.json();
 movie = data.results;
 console.log(movie);
@@ -20,21 +21,35 @@ function fetchMovies(movies){
         list.innerHTML  = `
                           <img src= "${imgUrl}"/>
                           <h3>${element.title || "movie-title"}</h3>
-                          <button class="heart-button" id ="heart-icon">&#10084</button>
+                          <button class="heart-button" id ="heart-icon" data-id ="${element.id}">&#10084
+                          </button>
                            <span>Votes:${element.vote_count || "vote-count"}</span>
                            <p>Rating:${element.vote_average || "vote-average"}</P>
                            `;                           
                            const heartIcon = list.querySelector('#heart-icon');
-                             
+                           
+                            let fav = true;
                             // console.log(heartIcon);
                             heartIcon.addEventListener("click", ()=>{
-                                if (heartIcon.style.color === '') {
+                                if(fav){
                                     heartIcon.style.color = 'red';
-                                    saveToFavourites(element);
-                                } else {
-                                    heartIcon.style.color = '';
-                                    removeFromFav(element);
+                                    saveToFavourites(heartIcon.getAttribute("data-id"));
                                 }
+                                else {
+                                    heartIcon.style.color = '';
+                                    removeFromFav(heartIcon.getAttribute("data-id"));
+                                }
+
+                                fav = !fav;
+
+                                // if (heartIcon.style.color === '') {
+                                //     heartIcon.style.color = 'red';
+                                //     saveToFavourites(heartIcon.getAttribute("data-id"));
+                                // } else {
+                                //     heartIcon.style.color = '';
+                                //     removeFromFav(element);
+                                // }
+                                // heartIcon.classList.toggle("active");
 
                             })
                                                              
@@ -43,15 +58,30 @@ function fetchMovies(movies){
     });    
       
 }
-function saveToFavourites(movies){
-    favMovies.push(movies);
-    localStorage.setItem("favourites",JSON.stringify(favMovies));
-    console.log(favMovies);
+function saveToFavourites(mId){
+    // console.log(mId);
+   movie.forEach((ele)=>{
+    if(ele.id == mId){
+    // console.log(ele);
+    if(!favMovies.some((mov)=>mov.id == mId)){
+        // console.log(ele);
+    favMovies.push(ele);
+    }
+   }
+})   
+    console.log(favMovies);    
+   localStorage.setItem("favourites",JSON.stringify(favMovies));   
 }
-function removeFromFav(movies){
-    favMovies.splice(movies.index,1);
+
+function removeFromFav(mId){
+    for(let i=0;i<favMovies.length;i++){
+        if(favMovies[i].id == mId){
+            favMovies.splice(i,1);
+            break;
+        }
+    }
     localStorage.setItem("favourites",JSON.stringify(favMovies));
-    console.log(favMovies);
+    // console.log(favMovies);
 }
 
 function sortByDate(){
@@ -72,9 +102,18 @@ function sortByRating(){
     fetchMovies(movie);
 }
 function dispFavorite(){
+    const favMov = localStorage.getItem("favourites");
+    // console.log(favMov);
+   favMovies = JSON.parse(favMov);
+//    console.log(favMovies);
     fetchMovies(favMovies);
 }
-
+function dispAll(){
+    fetchMovies(movie);
+}
+function nextPage(){
+// if(currPage==1)
+}
 document.getElementById("movie-name").addEventListener("input", (event)=> {
     const searchWord = event.target.value.toLowerCase();
     // console.log(searchWord);
@@ -86,4 +125,4 @@ document.getElementById("movie-name").addEventListener("input", (event)=> {
         fetchMovies(searchedMovie);
     });    
 })
-movieList();
+movieList(currPage);

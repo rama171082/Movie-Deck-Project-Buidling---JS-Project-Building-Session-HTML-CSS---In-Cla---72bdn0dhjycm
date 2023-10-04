@@ -1,0 +1,130 @@
+.headerClass{
+    background-color: rgb(17, 0, 252);
+    color: rgb(249,249,249);
+    font-size: 40px;
+    font-weight: bold;
+    padding:10px;   
+    height: 80px;
+    width: 100%;
+}
+a{
+    text-decoration: none;
+    color: rgb(249,249,249);
+}
+.searchClass{
+display: flex;
+/* flex-direction: row; */
+justify-content: center;
+align-items: center;
+margin: 20px;
+}
+#movie-name{
+border: 1px solid black;
+border-radius: 4px;
+box-shadow: rgb(33, 32, 32);
+padding: 5px;
+}
+#searchBtn{
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: grey;
+    color: white;
+    padding: 5px;
+}
+.sortingClass{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+margin-top: 10px;
+}
+#sortDate{
+border: none;
+font-weight: bold;
+}
+#sortRating{
+border: none;
+font-weight: bold;
+}
+.active-tab{
+background-color: grey;
+columns: white;
+border: none;
+width: 70px;
+border-radius: 3px;
+padding: 5px;
+}
+.tabClass{
+padding:10px;
+
+}
+#favourite{
+    border: none;
+    }
+#movie-card{
+    /* border: 1px solid black;
+    border-radius: 4px;
+    height: 250px;
+    width: 150px;
+    /* box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5); */
+    /* padding: 0;
+    display: flex; */ 
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    list-style: none;
+    
+    }
+    .movie-list{
+        border: 1px solid black;
+        border-radius: 4px;
+        width: 200px;
+        text-align: center;
+        margin: 10px;
+        padding: 10px;
+    }
+    .movie-list img{
+        max-width: 100%;
+        height: auto;
+    }
+    .movie-list button{
+      padding-left: 180px;
+    }
+    /* #btnImg{
+        border: none;
+        margin-left: 70px;
+        margin-top: 0;
+    } */
+    .paginationClass{
+        text-align: center;
+    }
+    .paginationClass button{
+        border: none;
+        background-color: lightgrey;
+        border-radius: 3px;
+        font-weight: bold;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .heart-button {
+    width: 20px;
+    height: 20px;
+        
+    }
+    
+    .heart-button .active i{
+        color: red;
+    }
+    
+    footer{        
+            background-color: rgb(17, 0, 255);
+            color: rgb(249, 249, 249);
+            font-size:15px;
+            font-weight: bold;    
+            height: 30px;
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            /* margin-top: auto; */
+        
+    }

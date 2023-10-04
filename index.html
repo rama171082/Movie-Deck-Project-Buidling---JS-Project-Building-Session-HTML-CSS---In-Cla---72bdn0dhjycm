@@ -25,8 +25,8 @@
         <button id="sortRating" onclick="sortByRating()">Sort by rating (least to most)</button>
     </div>
     <div class="tabClass">
-        <button class="active-tab">All</button>
-        <button id="favourite" onclick="dispFavorite()">Favorites</button>
+        <button class="active-tab" onclick="dispAll()">All</button>
+        <button id="favourite" onclick="dispFavorite()">Favorites</button>      
     </div>
     <div class ="listPaging">
         <ul id = "movie-card">
@@ -34,9 +34,9 @@
         </ul>
     
     <div class="paginationClass">
-        <button disabled>Previous</button>
+        <button onclick="prevButton()">Previous</button>
         <button>Current Page: 1</button>
-        <button>Next</button>
+        <button onclick="nextPage()">Next</button>
     </div>
 </div>
     <footer>
