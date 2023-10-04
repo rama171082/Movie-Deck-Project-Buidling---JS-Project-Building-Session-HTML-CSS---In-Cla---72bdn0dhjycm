@@ -4,11 +4,13 @@ var currPage = 1;
 var movie=[];
 var favMovies=[];
 var favMoviesId=[];
+const currentPageBtn = document.getElementById("current");
+currentPageBtn.innerHTML = `Current Page: ${currPage}`;
 async function movieList(page){
 const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${page}`);
 const data = await response.json();
 movie = data.results;
-console.log(movie);
+console.log(currPage);
 fetchMovies(movie);
 }
 function fetchMovies(movies){
@@ -111,8 +113,34 @@ function dispFavorite(){
 function dispAll(){
     fetchMovies(movie);
 }
-function nextPage(){
-// if(currPage==1)
+
+const prevPage = document.querySelector(".prevBtn");
+console.log(prevPage);
+prevPage.addEventListener("click", ()=>{
+    pagination("Previous")
+});
+const nextPage = document.querySelector(".nextBtn");
+console.log(nextPage);
+nextPage.addEventListener("click", ()=>{
+    pagination("Next")
+});
+
+function pagination(selPage){
+    console.log(selPage);
+if(selPage == "Next" && currPage < 3){
+    currPage++;
+    console.log(currPage);
+
+currentPageBtn.innerHTML = `Current Page: ${currPage}`;
+movieList(currPage);
+}
+else if(selPage == "Previous" && currPage > 1 ){
+currPage--;
+console.log(currPage);
+// const currentPageBtn = document.getElementById("current");
+currentPageBtn.innerHTML = `Current Page: ${currPage}`;
+movieList(currPage);
+}
 }
 document.getElementById("movie-name").addEventListener("input", (event)=> {
     const searchWord = event.target.value.toLowerCase();
@@ -125,4 +153,5 @@ document.getElementById("movie-name").addEventListener("input", (event)=> {
         fetchMovies(searchedMovie);
     });    
 })
+
 movieList(currPage);
