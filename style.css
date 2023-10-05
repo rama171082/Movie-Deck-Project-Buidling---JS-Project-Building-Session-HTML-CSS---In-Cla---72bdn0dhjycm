@@ -87,14 +87,10 @@ padding:10px;
         max-width: 100%;
         height: auto;
     }
-    .movie-list button{
-      padding-left: 180px;
-    }
-    /* #btnImg{
-        border: none;
-        margin-left: 70px;
-        margin-top: 0;
-    } */
+    .heart-button{
+        float: right;
+          }
+   
     .paginationClass{
         text-align: center;
     }
@@ -106,15 +102,9 @@ padding:10px;
         padding: 10px;
         margin-bottom: 10px;
     }
-    .heart-button {
-    width: 20px;
-    height: 20px;
-        
-    }
+   
     
-    .heart-button .active i{
-        color: red;
-    }
+  
     
     footer{        
             background-color: rgb(17, 0, 255);

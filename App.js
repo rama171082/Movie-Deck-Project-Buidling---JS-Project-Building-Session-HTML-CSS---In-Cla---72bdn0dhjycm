@@ -4,6 +4,7 @@ var currPage = 1;
 var movie=[];
 var favMovies=[];
 var favMoviesId=[];
+
 const currentPageBtn = document.getElementById("current");
 currentPageBtn.innerHTML = `Current Page: ${currPage}`;
 async function movieList(page){
@@ -14,6 +15,8 @@ console.log(currPage);
 fetchMovies(movie);
 }
 function fetchMovies(movies){
+    prevPage.disabled = currPage === 1;
+nextPage.disabled = currPage === 3;
         card.innerHTML="";
         movies.forEach((element) => {
         // console.log(element);
@@ -25,9 +28,10 @@ function fetchMovies(movies){
                           <h3>${element.title || "movie-title"}</h3>
                           <button class="heart-button" id ="heart-icon" data-id ="${element.id}">&#10084
                           </button>
-                           <span>Votes:${element.vote_count || "vote-count"}</span>
+                           <p>Votes:${element.vote_count || "vote-count"}</p>
                            <p>Rating:${element.vote_average || "vote-average"}</P>
-                           `;                           
+                           `;  
+                                                
                            const heartIcon = list.querySelector('#heart-icon');
                            
                             let fav = true;
@@ -44,23 +48,16 @@ function fetchMovies(movies){
 
                                 fav = !fav;
 
-                                // if (heartIcon.style.color === '') {
-                                //     heartIcon.style.color = 'red';
-                                //     saveToFavourites(heartIcon.getAttribute("data-id"));
-                                // } else {
-                                //     heartIcon.style.color = '';
-                                //     removeFromFav(element);
-                                // }
-                                // heartIcon.classList.toggle("active");
-
-                            })
+                                });
                                                              
                            card.appendChild(list);
                            
-    });    
+    });  
+   
       
 }
-function saveToFavourites(mId){
+
+  function saveToFavourites(mId){
     // console.log(mId);
    movie.forEach((ele)=>{
     if(ele.id == mId){
@@ -116,11 +113,15 @@ function dispAll(){
 
 const prevPage = document.querySelector(".prevBtn");
 console.log(prevPage);
+
+
 prevPage.addEventListener("click", ()=>{
     pagination("Previous")
 });
 const nextPage = document.querySelector(".nextBtn");
 console.log(nextPage);
+
+
 nextPage.addEventListener("click", ()=>{
     pagination("Next")
 });
