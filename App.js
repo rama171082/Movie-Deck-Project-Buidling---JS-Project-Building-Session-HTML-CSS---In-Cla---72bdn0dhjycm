@@ -4,7 +4,6 @@ var currPage = 1;
 var movie=[];
 var favMovies=[];
 var favMoviesId=[];
-
 const currentPageBtn = document.getElementById("current");
 currentPageBtn.innerHTML = `Current Page: ${currPage}`;
 async function movieList(page){
@@ -16,10 +15,9 @@ fetchMovies(movie);
 }
 function fetchMovies(movies){
     prevPage.disabled = currPage === 1;
-nextPage.disabled = currPage === 3;
+    nextPage.disabled = currPage === 3;
         card.innerHTML="";
-        movies.forEach((element) => {
-        // console.log(element);
+        movies.forEach((element) => {       
         const list = document.createElement("li");
         list.classList.add("movie-list");
         const imgUrl = `https://image.tmdb.org/t/p/original/${element.poster_path}`;
@@ -30,13 +28,10 @@ nextPage.disabled = currPage === 3;
                           </button>
                            <p>Votes:${element.vote_count || "vote-count"}</p>
                            <p>Rating:${element.vote_average || "vote-average"}</P>
-                           `;  
-                                                
+                           `;                                                 
                            const heartIcon = list.querySelector('#heart-icon');
-                           
                             let fav = true;
-                            // console.log(heartIcon);
-                            heartIcon.addEventListener("click", ()=>{
+                             heartIcon.addEventListener("click", ()=>{
                                 if(fav){
                                     heartIcon.style.color = 'red';
                                     saveToFavourites(heartIcon.getAttribute("data-id"));
@@ -48,7 +43,8 @@ nextPage.disabled = currPage === 3;
 
                                 fav = !fav;
 
-                                });
+                                });                               
+                                
                                                              
                            card.appendChild(list);
                            
@@ -57,19 +53,35 @@ nextPage.disabled = currPage === 3;
       
 }
 
-  function saveToFavourites(mId){
-    // console.log(mId);
+function fetchFavMovies(movies){
+    card.innerHTML="";
+    movies.forEach((element) => {
+        const list = document.createElement("li");
+    list.classList.add("movie-list");
+    const imgUrl = `https://image.tmdb.org/t/p/original/${element.poster_path}`;
+    list.innerHTML  = `
+                      <img src= "${imgUrl}"/>
+                      <h3>${element.title || "movie-title"}</h3>
+                      <button class="heart-button" id ="heart-icon" data-id ="${element.id}">&#10084
+                      </button>
+                       <p>Votes:${element.vote_count || "vote-count"}</p>
+                       <p>Rating:${element.vote_average || "vote-average"}</P>
+                       `;
+                       list.querySelector("#heart-icon").style.color ="red";
+                       card.appendChild(list);
+                           
+    });  
+}
+  function saveToFavourites(mId){   
    movie.forEach((ele)=>{
-    if(ele.id == mId){
-    // console.log(ele);
+    if(ele.id == mId){   
     if(!favMovies.some((mov)=>mov.id == mId)){
-        // console.log(ele);
-    favMovies.push(ele);
+          favMovies.push(ele);          
     }
    }
 })   
-    console.log(favMovies);    
-   localStorage.setItem("favourites",JSON.stringify(favMovies));   
+    localStorage.setItem("favourites",JSON.stringify(favMovies));
+
 }
 
 function removeFromFav(mId){
@@ -79,8 +91,7 @@ function removeFromFav(mId){
             break;
         }
     }
-    localStorage.setItem("favourites",JSON.stringify(favMovies));
-    // console.log(favMovies);
+    localStorage.setItem("favourites",JSON.stringify(favMovies));  
 }
 
 function sortByDate(){
@@ -88,27 +99,23 @@ function sortByDate(){
     let ad = new Date(a.release_date);
     let bd = new Date(b.release_date);
     return ad-bd});
-    movie.forEach((m)=>{
-        // console.log(m.title,m.release_date)
-    })
-    fetchMovies(movie);
+   fetchMovies(movie);
 }
 function sortByRating(){
-    // console.log(movie);
+    
     movie.sort(function(a,b)
     {return a.vote_average - b.vote_average});
-    // console.log(movie);
+    
     fetchMovies(movie);
 }
 function dispFavorite(){
-    const favMov = localStorage.getItem("favourites");
-    // console.log(favMov);
+    const favMov = localStorage.getItem("favourites");   
    favMovies = JSON.parse(favMov);
-//    console.log(favMovies);
-    fetchMovies(favMovies);
+    fetchFavMovies(favMovies);     
 }
-function dispAll(){
-    fetchMovies(movie);
+
+function dispAll(){     
+    fetchMovies(movie);    
 }
 
 const prevPage = document.querySelector(".prevBtn");
@@ -138,18 +145,17 @@ movieList(currPage);
 else if(selPage == "Previous" && currPage > 1 ){
 currPage--;
 console.log(currPage);
-// const currentPageBtn = document.getElementById("current");
 currentPageBtn.innerHTML = `Current Page: ${currPage}`;
 movieList(currPage);
 }
 }
 document.getElementById("movie-name").addEventListener("input", (event)=> {
     const searchWord = event.target.value.toLowerCase();
-    // console.log(searchWord);
+   
     const searchedMovie = movie.filter(movies=>
         movies.title.toLowerCase().includes(searchWord)
     );
-    // console.log(searchedMovie);
+    
     document.getElementById("searchBtn").addEventListener("click",()=>{
         fetchMovies(searchedMovie);
     });    
